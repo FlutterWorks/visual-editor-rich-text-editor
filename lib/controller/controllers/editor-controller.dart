@@ -612,8 +612,22 @@ class EditorController {
     _state.markersVisibility.toggleMarkers(areVisible);
   }
 
+  void toggleMarkersByTypes(
+    List<String> markerTypes,
+    bool areVisible,
+  ) {
+    _state.markersVisibility.toggleMarkersByTypes(
+      markerTypes,
+      areVisible,
+    );
+  }
+
   bool getMarkersVisibility() {
     return _state.markersVisibility.visibility;
+  }
+
+  bool getMarkersVisibilityByTypes(List<String> markerTypes) {
+    return _state.markersVisibility.getMarkersVisibilityByTypes(markerTypes);
   }
 
   List<MarkerM> getAllMarkers() {
