@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 
@@ -26,7 +25,6 @@ Widget defaultEmbedBuilder(
   EmbedM node,
   bool readOnly,
 ) {
-  assert(!kIsWeb, 'Please provide EmbedBuilder for Web');
   ContentSizeM? _widthHeight;
 
   switch (node.value.type) {
