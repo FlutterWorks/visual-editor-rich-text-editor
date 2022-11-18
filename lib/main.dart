@@ -39,6 +39,9 @@ import 'selection/controllers/selection-actions.controller.dart';
 import 'selection/services/selection-actions.service.dart';
 import 'selection/services/text-selection.service.dart';
 import 'selection/widgets/text-gestures.dart';
+import 'shared/utils/actions.utils.dart';
+import 'shared/utils/intents.utils.dart';
+import 'shared/utils/shortcuts.utils.dart';
 import 'shared/state/editor-state-receiver.dart';
 import 'shared/state/editor.state.dart';
 
@@ -488,13 +491,26 @@ class VisualEditorState extends State<VisualEditor>
     required Widget child,
   }) =>
       kIsWeb
-          ? RawKeyboardListener(
-              focusNode: FocusNode(
-                onKey: _onKey,
+          ? Shortcuts(
+              shortcuts: shortcuts,
+              child: Actions(
+                actions: _actions,
+                child: RawKeyboardListener(
+                  focusNode: FocusNode(
+                    onKey: _onKey,
+                  ),
+                  child: child,
+                ),
               ),
-              child: child,
             )
           : child;
+
+  late final Map<Type, Action<Intent>> _actions = <Type, Action<Intent>>{
+    IndentSelectionIntent: IndentSelectionAction(widget.controller),
+    ApplyHeaderIntent: ApplyHeaderAction(widget.controller),
+    ApplyCheckListIntent: ApplyCheckListAction(widget.controller),
+    ToggleTextStyleIntent: ToggleTextStyleAction(widget.controller),
+  };
 
   // Returns the pressed or released key.
   KeyEventResult _onKey(FocusNode node, RawKeyEvent event) {
